@@ -1,0 +1,19 @@
+.yyghUser {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #F3F3F3;
+    height: 100vh;
+    align-items: center;
+}
+
+.main {
+    background-color: #F3F3F3 !important;
+    margin: 0 auto;
+
+    :global(.MuiStack-root) {
+        margin-top: 0 !important;
+    }
+
+}
