@@ -146,26 +146,28 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
     }
 
     return <Stack className={classes.userListPage} spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
-        <Typography sx={{ fontWeight: 'bold' }}>添加就诊人</Typography>
-        <Typography sx={{ pt: 4, pb: 1 }}>就诊人信息</Typography>
+        <Typography sx={{ fontWeight: 'bold' }}>添加患者</Typography>
+        <Typography sx={{ pt: 4, pb: 1 }}>患者信息</Typography>
         <Box component="form" onSubmit={handleSubmit(onFormSubmit)}>
             <Grid container sx={{ py: 1 }} >
                 <Stack spacing={2} direction={'row'}>
                     <Grid item xs={6} sx={{ width: 450 }}>
                         <TextField
                             type="text"
+                            required
                             fullWidth
                             name="name"
                             label={'请输入姓名全称'}
-                            {...register('name')}
+                            {...register('name', { required: true })}
                         /></Grid>
                     <Grid item xs={6} sx={{ pl: 2, width: 450 }}>
                         <TextField
+                            required
                             fullWidth
                             type="text"
                             name="certificates_no"
-                            label={'身份证号码：'}
-                            {...register('certificates_no')}
+                            label={'身份证号码'}
+                            {...register('certificates_no', { required: true })}
                         />
                     </Grid>
                 </Stack>
@@ -174,17 +176,19 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
                 <Stack spacing={2} direction={'row'}>
                     <Grid item xs={6} sx={{ width: 450 }}>
                         <TextField
+                            required
                             name="phone"
                             fullWidth
                             inputProps={{ length: 11 }}
                             label={'请输入电话号码'}
-                            {...register('phone')}
+                            {...register('phone', { required: true })}
                         /></Grid>
 
                     <Grid item xs={6} sx={{ pl: 1 }} >
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DemoContainer components={['DatePicker']}>
                                 <DatePicker
+                                    required
                                     sx={{ width: 440 }}
                                     label="出生日期"
                                     value={patient.birthdate}
@@ -201,6 +205,7 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
                         <Grid item xs={6}>
                             <FormControl>
                                 <Controller
+                                    required
                                     name="sex"
                                     control={control}
                                     render={({ field }) => {
@@ -229,12 +234,13 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
                     </Stack>
                     <Grid item xs={8} sx={{ pl: 5 }} >
                         <TextField
+                            required
                             // fullWidth
                             sx={{ width: 700 }}
                             type="text"
                             name="address"
-                            label={'详细地址：'}
-                            {...register('address')}
+                            label={'详细地址'}
+                            {...register('address', { required: true })}
                         />
                     </Grid>
                 </Stack>

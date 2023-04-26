@@ -9,13 +9,11 @@ function Router() {
       { path: '', index: true, element: <Navigate to='/home' /> },
       { path: 'home', element: <HomePage /> },
       { path: 'hospital/:hoscode', element: <HospitalPage /> },
-      { path: 'hospital/schedulePage/:hoscode/:depcode', element: <HospitalPage /> },
-      { path: 'hospital/registration/:scheduleId', element: <Registration /> },
-      { path: 'user', element: <UserPage /> },
+      // { path: 'user', element: <UserPage /> },
       { path: 'patient/index', element: <PatientPage /> },
     ]
   },
-  // { path: '*', element: <Navigate to="/login" replace /> }
+    // { path: '*', element: <Navigate to="/login" replace /> }
   ])
 }
 

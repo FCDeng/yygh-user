@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useSearchParams } from "react-router-dom"
 import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -9,6 +9,7 @@ import UserPage from '../user'
 import UserShow from './UserShow'
 import OrderPage from '../order'
 import UserAdd from './UserAdd'
+import OrderShow from '../order/OrderShow'
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { SET_PatientStateValue, SET_PatientStateIndex, SET_UserStateValue, SET_UserStateIndex } from '@/store/user'
@@ -48,6 +49,7 @@ function a11yProps(index) {
 }
 
 const PatientPage = () => {
+    const [search, setSearch] = useSearchParams()
     const user = useSelector((state) => {
         return state.user
     })
@@ -60,12 +62,25 @@ const PatientPage = () => {
     const [hospital, setHospital] = useState({
         param: {}
     })
+    const [orderId, setOrderId] = useState(null);
     const [patientId, setPatientId] = useState(null);
     const [showDetail, setShowDetail] = useState(false)
     const [showAdd, setShowAdd] = useState(false)
     const [showUserList, setShowUserList] = useState(true)
     const [showUserIndex, setShowUserIndex] = useState(0)
+    const [showOrderIndex, setShowOrderIndex] = useState(0)
     useEffect(() => {
+        const paramOrderIndex = search.get('paramOrderIndex')
+        const paramOrderId = search.get('orderId')
+        console.log(paramOrderIndex, paramOrderId)
+        if (paramOrderIndex) {
+            setShowOrderIndex(paramOrderIndex)
+            setValue(1)
+        }
+        // if (paramOrderId) {
+        //     setOrderId(paramOrderId)
+        // }
+
         if (patientIndex) {
             setValue(patientIndex)
         } else if (user.patientStateValue) {
@@ -83,6 +98,8 @@ const PatientPage = () => {
     const handleChange = (event, newValue) => {
         setValue(newValue);
         setShowUserIndex(0)
+        setShowOrderIndex(0)
+        setSearch({})
     };
     return <Box
         sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', flex: 1 }}
@@ -92,17 +109,18 @@ const PatientPage = () => {
             value={value}
             onChange={handleChange}
             aria-label="Vertical tabs example"
-            sx={{ borderRight: 1, borderColor: 'divider', width: 200 }}
+            sx={{ borderRight: 1, borderColor: 'divider', width: 150 }}
         >
             <Tab label="实名认证" {...a11yProps(0)} />
             <Tab label="挂号订单" {...a11yProps(1)} />
-            <Tab label="就诊人管理" {...a11yProps(2)} />
+            <Tab label="患者管理" {...a11yProps(2)} />
         </Tabs>
         <TabPanel value={value} index={0} >
             <UserPage />
         </TabPanel>
-        <TabPanel value={value} index={1}  >
-            <OrderPage />
+        <TabPanel value={value} index={1}  > 
+            {showOrderIndex == 0 ? <OrderPage /> : null}
+            {showOrderIndex == 1 ? <OrderShow orderId={search.get('orderId')} /> : null}
         </TabPanel>
         <TabPanel value={value} index={2}>
             {showUserIndex === 0 ? <UserListPage setPatientId={setPatientId} id={id} setShowUserIndex={setShowUserIndex} /> : null}

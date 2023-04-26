@@ -43,8 +43,8 @@ const UserPage = ({ id, setShowUserIndex, patientId }) => {
     }
 
     return <Stack className={classes.userListPage} spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
-        <Typography sx={{ fontWeight: 'bold' }}>就诊人详情</Typography>
-        <Typography sx={{ pt: 1, pb: 1 }}>就诊人信息</Typography>
+        <Typography sx={{ fontWeight: 'bold' }}>患者详情</Typography>
+        <Typography sx={{ pt: 1, pb: 1 }}>患者信息</Typography>
 
         <Stack spacing={2} sx={{ pl: 40 }}>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>姓名：</Typography><Typography>{patient.name}</Typography></Stack>

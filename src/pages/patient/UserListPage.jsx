@@ -84,7 +84,7 @@ const UserListPage = ({ id, setShowUserIndex, setPatientId }) => {
     }
 
     return <Stack className={classes.userListPage} spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
-        <Typography sx={{ fontWeight: 'bold' }}>就诊人管理</Typography>
+        <Typography sx={{ fontWeight: 'bold' }}>患者管理</Typography>
         <Stack spacing={2} sx={{ py: 3 }}>
             {patientList.map(item => (<Card
                 variant="outlined"
@@ -116,7 +116,7 @@ const UserListPage = ({ id, setShowUserIndex, setPatientId }) => {
                     onClick={() => setShowUserIndex(2)}
                 >
                     <AddIcon sx={{ color: '#3375C1' }} />
-                    <Typography sx={{ color: '#3375C1', fontSize: 10 }} >添加就诊人：</Typography>
+                    <Typography sx={{ color: '#3375C1', fontSize: 10 }} >添加患者：</Typography>
                 </Box>
             </CardContent>
         </Card>

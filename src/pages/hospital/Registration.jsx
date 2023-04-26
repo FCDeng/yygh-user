@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Checkbox from '@mui/material/Checkbox';
 import { useNavigate, useLocation, useParams } from 'react-router-dom'
 const HospitalLogo = require('@/static/images/hospitalLogo.png')
-const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => { 
+const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
     const [hospital, setHospital] = useState({ param: {} })
     const [bookingRule, setBookingRule] = useState({})
     const [schedule, setSchedule] = useState({ param: {} })
@@ -33,7 +33,7 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
     const dispatch = useDispatch();
     const user = useSelector((state) => {
         return state.user
-    }) 
+    })
     useEffect(() => {
         init()
     }, [])
@@ -48,7 +48,7 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
             setSchedule(response.data)
         })
     }
-    // 获取就诊人信息
+    // 获取患者信息
     const findPatientList = () => {
         patientApi.findList().then(response => {
             setPatientList(response.data)
@@ -64,23 +64,25 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
     }
     const submitOrder = () => {
         if (patientId == null) {
-            message.error('请选择就诊人')
+            message.error('请选择患者')
             return
-        } 
+        }
+        // navigate(`/patient/index?paramOrderIndex=1&orderId=${1}`, { replace: true })
+        // return
         orderInfoApi.submitOrder(scheduleId, patientId).then(response => {
-            console.log(patientId,111, scheduleId);
             dispatch(SET_PatientStateValue({ patientStateValue: 1 }))
+            let orderId = response.data
             message.success('保存成功')
-            navigate('/patient/index', { replace: true })
+            navigate(`/patient/index?paramOrderIndex=1&orderId=${orderId}`, { replace: true })
         }).catch(e => {
         })
     }
 
     const goAddPatient = () => {
         // navigate('/patient/index', { state: { patientIndex: 2, userIndexDefault: 2 }, replace: true })
-        dispatch(SET_PatientStateValue({ patientStateValue: 2 })) 
-        dispatch(SET_PatientStateIndex({ patientStateIndex: 2 })) 
-        dispatch(SET_Code({ code: hoscode })) 
+        dispatch(SET_PatientStateValue({ patientStateValue: 2 }))
+        dispatch(SET_PatientStateIndex({ patientStateIndex: 2 }))
+        dispatch(SET_Code({ code: hoscode }))
         navigate('/patient/index', { replace: true })
     }
     const [selectedValue, setSelectedValue] = useState(-1);
@@ -97,7 +99,7 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
         <Typography sx={{ fontWeight: 'bold', mt: 1, mb: 1 }} >挂号信息</Typography>
         <Stack direction={'row'} sx={{ py: 2 }}>
             <LabelIcon sx={{ color: '#3375C1' }} />
-            <Typography>选择就诊人：</Typography>
+            <Typography>选择患者：</Typography>
         </Stack>
         <Stack direction={'row'} spacing={4} sx={{ pb: 4 }}>
             {patientList.map((item, index) => (<Card
@@ -120,7 +122,7 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
                         display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 65
                     }}  >
                         <AddIcon sx={{ color: '#3375C1' }} />
-                        <Typography sx={{ color: '#3375C1', fontSize: 10 }}>添加就诊人：</Typography>
+                        <Typography sx={{ color: '#3375C1', fontSize: 10 }}>添加患者：</Typography>
                     </Box>
                 </CardContent>
             </Card>

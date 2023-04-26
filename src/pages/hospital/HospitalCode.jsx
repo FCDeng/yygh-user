@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, Avatar,Button } from '@mui/material';
+import { Box, Stack, Typography, Avatar, Button } from '@mui/material';
 import AlignVerticalBottomIcon from '@mui/icons-material/AlignVerticalBottom';
 import { useState, useEffect } from 'react';
 import classes from './HospitalCode.scss'
@@ -34,6 +34,16 @@ const HospitalCode = ({ hoscode, setShowHospIndex, setDepCode }) => {
             setOpenLoginDialog(true)
             return
         }
+        // //判断认证
+        userInfoApi.getUserInfo().then(response => {
+            let authStatus = response.data.authStatus
+            // 状态为2认证通过
+            if (!authStatus || authStatus != 2) {
+                navigate('/patient/index', { replace: true })
+                return
+            }
+        })
+
         setShowHospIndex(1)
         setDepCode(depcode)
     }
@@ -48,7 +58,7 @@ const HospitalCode = ({ hoscode, setShowHospIndex, setDepCode }) => {
         </Stack>
         <Stack direction="row" spacing={3}>
             <Avatar src={HospitalLogo} sx={{ width: 80, height: 80 }}>{hospital.hosname}</Avatar>
-            <Stack spacing={2} sx={{pt:2}} className={classes.m0}>
+            <Stack spacing={2} sx={{ pt: 2 }} className={classes.m0}>
                 <Typography>挂号规则</Typography>
                 <Stack direction="row" spacing={2} alignItems={'center'} >
                     <Stack className={classes.m0} flexDirection={'row'} alignItems={'center'} spacing={2} ><Typography sx={{ color: '#999' }} className={classes.m0}>预约周期：</Typography><Typography className={classes.m0} sx={{ color: '#333' }}>{bookingRule.cycle}</Typography></Stack>

@@ -59,7 +59,7 @@ const UserPage = () => {
             setUserInfo(response.data)
         })
     }
-   
+
     const goAddPatient = () => {
         navigate('./patient/add')
     }
@@ -77,11 +77,12 @@ const UserPage = () => {
     }
 
     return <Stack className={classes.userPage} spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
-        <Typography sx={{ fontWeight: 'bold', pb: 2 }}>实名认证</Typography>
+        <Typography sx={{ fontWeight: 'bold', pb: 1 }}>实名认证</Typography>
+        <Typography sx={{ fontWeight: 'bold', pb: 1 }}>{`认证状态：${userInfo.param.authStatusString}`}</Typography>
         <Stack direction={'row'} spacing={1} sx={{ display: 'flex', alignItems: 'center', background: '#f4f9ff', width: '100%', height: 80, p: 2, boxSizing: 'border-box' }} >
             <HealthAndSafetyIcon sx={{ color: '#3375C1' }} />
             {/* <Typography sx={{ fontWeight: 'bold', color: '#3375C1' }}>认证成功</Typography> */}
-            <Typography sx={{ fontWeight: 'bold', color: '#3375C1' }}>完成实名认证后才能添加就诊人，正常进行挂号，为了不影响后续步骤，建议提前实名认证。</Typography>
+            <Typography sx={{ fontWeight: 'bold', color: '#3375C1' }}>完成实名认证后才能添加患者，正常进行挂号，为了不影响后续步骤，建议提前实名认证。</Typography>
         </Stack>
         {userInfo.authStatus === 0 ? <Box sx={{ display: 'flex', justifyContent: 'center', flex: 1 }} component="form" onSubmit={handleSubmit(onFormSubmit)}>
             <Stack spacing={3} sx={{ pt: 5, width: 400 }}>

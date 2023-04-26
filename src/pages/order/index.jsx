@@ -59,7 +59,7 @@ const OrderPage = () => {
             let newList = response.data.records.map(item => ({
                 ...item,
                 orderStatusString: item.param.orderStatusString
-            })).sort((a, b) => Date.parse(b.reserveDate) - Date.parse(a.reserveDate))
+            })).sort((a, b) => Date.parse(b.createTime) - Date.parse(a.createTime))
             setList(newList)
         })
     }
@@ -70,7 +70,7 @@ const OrderPage = () => {
     }
     const getStatusList = () => {
         orderInfoApi.getStatusList().then(response => {
-            setStatusList(response.data)
+            setStatusList(response.data.filter(item => item.status != -1))
         })
     }
 
@@ -86,19 +86,22 @@ const OrderPage = () => {
     const handleOrderChange = (e) => {
         setCommentName(e.target.value)
     }
+    const goDetail = () => {
+        navigate('')
+    }
     const columns = [
-        { field: 'reserveDate', headerName: '就诊时间', width: 130 },
-        { field: 'hosname', headerName: '医院', width: 130 },
-        { field: 'depname', headerName: '科室', width: 130 },
-        { field: 'title', headerName: '医生', width: 130 },
-        { field: 'amount', headerName: '医事服务费', width: 130 },
-        { field: 'patientName', headerName: '就诊人', width: 130 },
-        // { field: 'orderStatusString', headerName: '订单状态', width: 130 },
-        { field: 'orderStatusString', headerName: '订单状态', width: 130, renderCell: () => <Typography>预约成功</Typography> },
-        // {
-        //     field: 'action', headerName: '操作', width: 80,
-        //     renderCell: () => <Button variant="contained">详情</Button>
-        // },
+        { field: 'reserveDate', headerName: '就诊时间', width: 100 },
+        { field: 'hosname', headerName: '医院', width: 100 },
+        { field: 'depname', headerName: '科室', width: 100 },
+        { field: 'title', headerName: '医生', width: 100 },
+        { field: 'amount', headerName: '医事服务费', width: 80 },
+        { field: 'patientName', headerName: '患者', width: 100 },
+        { field: 'orderStatusString', headerName: '订单状态', width: 160 },
+        // { field: 'orderStatusString', headerName: '订单状态', width: 130, renderCell: () => <Typography>预约成功</Typography> },
+        {
+            field: 'action', headerName: '操作', width: 80,
+            renderCell: () => <Button variant="contained" onClick={() => goDetail(row.id)}>详情</Button>
+        },
     ]
 
     return <Stack className={classes.orderPage}
@@ -108,19 +111,19 @@ const OrderPage = () => {
         <Box component="form" onSubmit={handleSubmit(onFormSubmit)}>
             <Stack spacing={1} direction={'row'}>
                 <FormControl sx={{ width: 800 }} >
-                    <InputLabel id="patientId">请选择就诊人</InputLabel>
+                    <InputLabel id="patientId">请选择患者</InputLabel>
                     <Select
                         labelId="patientId"
                         id="patientId"
                         // value={patientName}
-                        label="请选择就诊人"
+                        label="请选择患者"
                         onChange={handlePatientChange}
                         name='patientName'
                     >
                         {patientList.map(item => (<MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>))}
                     </Select>
                 </FormControl>
-                {/* <FormControl sx={{ width: 500 }} >
+                <FormControl sx={{ width: 500 }} >
                     <InputLabel id="comment">订单状态：</InputLabel>
                     <Select
                         labelId="comment"
@@ -132,7 +135,7 @@ const OrderPage = () => {
                     >
                         {statusList.map(item => (<MenuItem key={item.comment} value={item.comment}>{item.comment}</MenuItem>))}
                     </Select>
-                </FormControl> */}
+                </FormControl>
                 <Button sx={{ pl: 2 }} variant="contained" onClick={fetchData} color="primary">搜索</Button>
             </Stack>
         </Box>
