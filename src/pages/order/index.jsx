@@ -70,7 +70,7 @@ const OrderPage = () => {
     }
     const getStatusList = () => {
         orderInfoApi.getStatusList().then(response => {
-            setStatusList(response.data.filter(item => item.status != -1))
+            setStatusList(response.data.filter(item => item.status != -1 && item.status != 2))
         })
     }
 
