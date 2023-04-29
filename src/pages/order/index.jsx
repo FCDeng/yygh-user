@@ -31,8 +31,8 @@ const OrderPage = () => {
     const [commentName, setCommentName] = useState('')
     const [userId, setUserId] = useState(null);
     useEffect(() => {
-        fetchData()
-        // getUserInfo
+        // fetchData()
+        getUserInfo()
         findPatientList()
         getStatusList()
     }, [])
@@ -45,7 +45,7 @@ const OrderPage = () => {
         getValues,
         formState: { errors },
     } = useForm({
-        defaultValues: { name: '', certificatesNo: '' },
+        defaultValues: { name: '', certificatesNo: '', patientName:'' },
     })
 
     const getUserInfo = () => {
@@ -64,7 +64,7 @@ const OrderPage = () => {
         if (commentName) {
             comment = statusList.find(item => item.comment == commentName).status
         }
-        orderInfoApi.getPageList(1, 40, { patientId, orderStatus: comment }).then(response => {
+        orderInfoApi.getPageList(1, 40, { patientId, orderStatus: comment}).then(response => {
             let newList = response.data.records.map(item => ({
                 ...item,
                 orderStatusString: item.param.orderStatusString
@@ -98,6 +98,9 @@ const OrderPage = () => {
     const goDetail = (id) => {
         navigate(`/patient/index?paramValueIndex=1&paramOrderIndex=1&orderId=${id}`, { replace: true })
     }
+    const goDoctorOrder = (id) => {
+        navigate(`/patient/index?paramValueIndex=1&paramOrderIndex=2&orderId=${id}`, { replace: true })
+    }
     const columns = [
         { field: 'reserveDate', headerName: '就诊时间', width: 100 },
         { field: 'hosname', headerName: '医院', width: 180 },
@@ -108,49 +111,52 @@ const OrderPage = () => {
         { field: 'orderStatusString', headerName: '订单状态', width: 160 },
         // { field: 'orderStatusString', headerName: '订单状态', width: 130, renderCell: () => <Typography>预约成功</Typography> },
         {
-            field: 'action', headerName: '操作', width: 80,
-            renderCell: ({ row }) => <Button variant="contained" onClick={() => goDetail(row.id)}>详情</Button>
+            field: 'action', headerName: '操作', width: 180,
+            renderCell: ({ row }) => <Stack direction={'row'} spacing={1}>
+                <Button variant="contained" onClick={() => goDetail(row.id)}>详情</Button>
+                {(row.diagnosis || row.remark) ? <Button variant="contained" onClick={() => goDoctorOrder(row.id)}>医嘱</Button> : null}
+            </Stack >
         },
     ]
 
-    return <Stack className={classes.orderPage}
-        spacing={4}
-        sx={{ background: 'white', p: 2, boxSizing: 'border-box', overflow: 'hidden' }}>
-        <Typography sx={{ fontWeight: 'bold' }}>挂号订单</Typography>
-        <Box component="form" onSubmit={handleSubmit(onFormSubmit)}>
-            <Stack spacing={1} direction={'row'}>
-                <FormControl sx={{ width: 400 }} >
-                    <InputLabel id="patientId">请选择患者</InputLabel>
-                    <Select
-                        labelId="patientId"
-                        id="patientId"
-                        // value={patientName}
-                        label="请选择患者"
-                        onChange={handlePatientChange}
-                        name='patientName'
-                    >
-                        {patientList.map(item => (<MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>))}
-                    </Select>
-                </FormControl>
-                <FormControl sx={{ width: 400 }} >
-                    <InputLabel id="comment">订单状态：</InputLabel>
-                    <Select
-                        labelId="comment"
-                        id="comment"
-                        // value={commentName}
-                        label="订单状态："
-                        onChange={handleOrderChange}
-                        name='comment'
-                    >
-                        {statusList.map(item => (<MenuItem key={item.comment} value={item.comment}>{item.comment}</MenuItem>))}
-                    </Select>
-                </FormControl>
-                <Button sx={{ pl: 2 }} variant="contained" onClick={fetchData} color="primary">搜索</Button>
-            </Stack>
-        </Box>
-        <Box sx={{ overflow: 'auto' }}>
-            <DataGrid pageSize={10} rows={list} columns={columns} sx={{ height: 400 }} />
-        </Box>
-    </Stack >
+return <Stack className={classes.orderPage}
+    spacing={4}
+    sx={{ background: 'white', p: 2, boxSizing: 'border-box', overflow: 'hidden' }}>
+    <Typography sx={{ fontWeight: 'bold' }}>挂号订单</Typography>
+    <Box component="form" onSubmit={handleSubmit(onFormSubmit)}>
+        <Stack spacing={1} direction={'row'}>
+            <FormControl sx={{ width: 400 }} >
+                <InputLabel id="patientId">请选择患者</InputLabel>
+                <Select
+                    labelId="patientId"
+                    id="patientId"
+                    // value={patientName}
+                    label="请选择患者"
+                    onChange={handlePatientChange}
+                    name='patientName'
+                >
+                    {patientList.map(item => (<MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>))}
+                </Select>
+            </FormControl>
+            <FormControl sx={{ width: 400 }} >
+                <InputLabel id="comment">订单状态：</InputLabel>
+                <Select
+                    labelId="comment"
+                    id="comment"
+                    // value={commentName}
+                    label="订单状态："
+                    onChange={handleOrderChange}
+                    name='comment'
+                >
+                    {statusList.map(item => (<MenuItem key={item.comment} value={item.comment}>{item.comment}</MenuItem>))}
+                </Select>
+            </FormControl>
+            <Button sx={{ pl: 2 }} variant="contained" onClick={fetchData} color="primary">搜索</Button>
+        </Stack>
+    </Box>
+    <Box sx={{ overflow: 'auto' }}>
+        <DataGrid pageSize={10} rows={list} columns={columns} sx={{ height: 400 }} />
+    </Box>
+</Stack >
 }
 export default OrderPage

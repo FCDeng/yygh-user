@@ -10,6 +10,7 @@ import UserShow from './UserShow'
 import OrderPage from '../order'
 import UserAdd from './UserAdd'
 import OrderShow from '../order/OrderShow'
+import DoctorOrder from '../order/DoctorOrder'
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { SET_PatientStateValue, SET_PatientStateIndex, SET_UserStateValue, SET_UserStateIndex } from '@/store/user'
@@ -79,7 +80,7 @@ const PatientPage = () => {
         getUserInfo()
         if (paramOrderIndex) {
             setShowOrderIndex(paramOrderIndex*1 || 0)
-            setValue(paramOrderIndex*1)
+            setValue(1)
         }
 
         if (paramValueIndex) {
@@ -140,6 +141,7 @@ const PatientPage = () => {
         <TabPanel value={value} index={1}  >
             {showOrderIndex == 0 ? <OrderPage /> : null}
             {showOrderIndex == 1 ? <OrderShow orderId={search.get('orderId')} /> : null}
+            {showOrderIndex == 2 ? <DoctorOrder orderId={search.get('orderId')} /> : null}
         </TabPanel>
         <TabPanel value={value} index={2}>
             {showUserIndex === 0 ? <UserListPage setPatientId={setPatientId} id={id} setShowUserIndex={setShowUserIndex} /> : null}
