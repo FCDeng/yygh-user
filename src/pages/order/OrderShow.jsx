@@ -70,12 +70,16 @@ const OrderShow = ({ orderId, setShowUserIndex }) => {
         timerRef.current = null
     }
 
-    return <Stack spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
-        <Typography sx={{ fontWeight: 'bold' }}>挂号详情</Typography>
+    return <Stack spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box', width: 990 }}>
+        <Stack direction={'row'} sx={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Typography sx={{ fontWeight: 'bold' }}>订单详情</Typography>
+            <Button variant="contained" onClick={() => navigate('/patient/index?paramValueIndex=1&paramOrderIndex=0', { replace: true })} sx={{ width: 60 }}>返回</Button>
+
+        </Stack>
         <Typography sx={{ fontWeight: 'bold' }}>{`订单状态：${orderInfo.param.orderStatusString}`}</Typography>
         <Typography sx={{ pt: 0.2, pb: 0.2 }}>挂号信息</Typography>
 
-        <Stack spacing={1} sx={{ pl: 20 }}>
+        <Stack spacing={1} sx={{ pl: 50 }}>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>患者信息：</Typography><Typography>{orderInfo.patientName}</Typography></Stack>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>就诊日期：</Typography><Typography>{orderInfo.reserveDate}</Typography></Stack>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>就诊医院：</Typography><Typography>{orderInfo.hosname}</Typography></Stack>
@@ -85,15 +89,15 @@ const OrderShow = ({ orderId, setShowUserIndex }) => {
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>挂号单号：</Typography><Typography>{orderInfo.outTradeNo}</Typography></Stack>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>挂号时间：</Typography><Typography>{orderInfo.createTime}</Typography></Stack>
         </Stack>
-        <Stack direction={'row'} spacing={2} sx={{ pl: 20, pt: 30 }}>
+        <Stack direction={'row'} justifyContent='center' alignItems={'center'} spacing={2} sx={{ pl: 5, pt: 1 }}>
             {/* <Button onClick={remove} variant='contained'>删除</Button> */}
             {orderInfo.orderStatus == 0 ? <Button onClick={() => pay()} variant='contained'>支付</Button> : null}
         </Stack>
         <DialogView open={dialogPayVisible} handleClose={closeDialog} title={'微信支付'} >
-            <Box width={260} height={240} sx={{ display: 'flex', justifyContent: 'center', flexDirection:'column', alignItems:'center' }}>
+            {payObj.codeUrl ? <Box width={260} height={240} sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                 <QRCode
                     id="qrCode"
-                    value={payObj.codeUrl}
+                    value={payObj.codeUrl || 'payObj.codeUrl'}
                     size={180} // 二维码的大小
                     fgColor="#000000" // 二维码的颜色
                     style={{ margin: 'auto' }}
@@ -101,6 +105,7 @@ const OrderShow = ({ orderId, setShowUserIndex }) => {
                 <Typography>  请使用微信扫一扫  </Typography>
                 <Typography>   扫描二维码支付  </Typography>
             </Box>
+                : <Typography>  支付错误  </Typography>}
         </DialogView>
     </Stack >
 }

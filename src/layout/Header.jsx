@@ -9,6 +9,7 @@ import cookie from 'js-cookie'
 import LoginDialog from '@/components/LoginDialog';
 import classes from './Header.scss'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import userInfoApi from '@/api/user/userInfo'
 const LogoIcon = require('@/static/images/logo.jpg')
 const defaultDialogData = {
     showLoginType: 'phone', // 控制手机登录与微信登录切换
@@ -24,6 +25,7 @@ const defaultDialogData = {
 const Header = () => {
 
     useEffect(() => {
+        getUserInfo()
         showInfo()
         return () => {
             clearTimeout(timeRef.current)
@@ -35,9 +37,15 @@ const Header = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [name, setName] = useState('游客');
 
+    const [authStatus, setAuthStatus] = useState(2);
     const [timer, setTimer] = useState(null);
     const [dialogData, setDialogData] = useState({});
     const open = Boolean(anchorEl);
+    const getUserInfo = () => {
+        userInfoApi.getUserInfo().then(response => {
+            setAuthStatus(response.data.authStatus)
+        })
+    }
     const userHandleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -45,19 +53,19 @@ const Header = () => {
         setAnchorEl(null);
     };
     const goCertification = () => {
-        navigate('./patient/index', {state: { patientIndex: 0 }})
+        navigate('patient/index?paramValueIndex=0', { replace: true })
     }
-    const goOrder = () => {
-        navigate('./patient/index', {state: { patientIndex: 1 }}) 
-    }
-    const goPatient = () => {
-        navigate('./patient/index', {state: { patientIndex: 2 }})
-    }
+    // const goOrder = () => {
+    //     navigate('./patient/index', {state: { patientIndex: 1 }}) 
+    // }
+    // const goPatient = () => {
+    //     navigate('./patient/index', {state: { patientIndex: 2 }})
+    // }
     const logoutHandle = () => {
         cookie.set('token', '')
         cookie.set('name', '')
-        window.location.reload()
         navigate('./home')
+        window.location.reload()
     }
 
     const showInfo = () => {
@@ -86,7 +94,7 @@ const Header = () => {
         // 初始化登录层相关参数
         dialogData = { ...defaultDialogData }
     }
- 
+
     // 获取验证码
     const getCodeFun = () => {
         if (!(/^1[34578]\d{9}$/.test(userInfo.phone))) {
@@ -154,6 +162,14 @@ const Header = () => {
         dialogData.showLoginType = 'phone'
         showLogin()
     }
+    const goCode = () => {
+        if (authStatus != 2) return
+        navigate('patient/index?paramValueIndex=1', { replace: true })
+    }
+    const goPatient = () => {
+        if (authStatus != 2) return
+        navigate('patient/index?paramValueIndex=2', { replace: true })
+    }
 
 
     return <Box className={classes.use} >
@@ -183,7 +199,9 @@ const Header = () => {
                         'aria-labelledby': 'basic-button',
                     }}
                 >
-                    <MenuItem onClick={goCertification}>实名认证</MenuItem> 
+                    <MenuItem onClick={goCertification}>实名认证</MenuItem>
+                    <MenuItem onClick={goCode}>挂号订单</MenuItem>
+                    <MenuItem onClick={goPatient}>患者管理</MenuItem>
                     <MenuItem onClick={logoutHandle}>退出登录</MenuItem>
                 </Menu>
             </Stack>

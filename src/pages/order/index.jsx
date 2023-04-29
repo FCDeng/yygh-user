@@ -29,8 +29,10 @@ const OrderPage = () => {
     const [statusList, setStatusList] = useState([])
     const [patientName, setPatientName] = useState('')
     const [commentName, setCommentName] = useState('')
+    const [userId, setUserId] = useState(null);
     useEffect(() => {
         fetchData()
+        // getUserInfo
         findPatientList()
         getStatusList()
     }, [])
@@ -45,6 +47,13 @@ const OrderPage = () => {
     } = useForm({
         defaultValues: { name: '', certificatesNo: '' },
     })
+
+    const getUserInfo = () => {
+        userInfoApi.getUserInfo().then(response => {
+            setUserId(response.data.id)
+            fetchData()
+        })
+    }
 
     const fetchData = () => {
         let patientId = ''
@@ -86,21 +95,21 @@ const OrderPage = () => {
     const handleOrderChange = (e) => {
         setCommentName(e.target.value)
     }
-    const goDetail = () => {
-        navigate('')
+    const goDetail = (id) => {
+        navigate(`/patient/index?paramValueIndex=1&paramOrderIndex=1&orderId=${id}`, { replace: true })
     }
     const columns = [
         { field: 'reserveDate', headerName: '就诊时间', width: 100 },
-        { field: 'hosname', headerName: '医院', width: 100 },
-        { field: 'depname', headerName: '科室', width: 100 },
+        { field: 'hosname', headerName: '医院', width: 180 },
+        { field: 'depname', headerName: '科室', width: 80 },
         { field: 'title', headerName: '医生', width: 100 },
         { field: 'amount', headerName: '医事服务费', width: 80 },
-        { field: 'patientName', headerName: '患者', width: 100 },
+        { field: 'patientName', headerName: '患者', width: 80 },
         { field: 'orderStatusString', headerName: '订单状态', width: 160 },
         // { field: 'orderStatusString', headerName: '订单状态', width: 130, renderCell: () => <Typography>预约成功</Typography> },
         {
             field: 'action', headerName: '操作', width: 80,
-            renderCell: () => <Button variant="contained" onClick={() => goDetail(row.id)}>详情</Button>
+            renderCell: ({ row }) => <Button variant="contained" onClick={() => goDetail(row.id)}>详情</Button>
         },
     ]
 
@@ -110,7 +119,7 @@ const OrderPage = () => {
         <Typography sx={{ fontWeight: 'bold' }}>挂号订单</Typography>
         <Box component="form" onSubmit={handleSubmit(onFormSubmit)}>
             <Stack spacing={1} direction={'row'}>
-                <FormControl sx={{ width: 800 }} >
+                <FormControl sx={{ width: 400 }} >
                     <InputLabel id="patientId">请选择患者</InputLabel>
                     <Select
                         labelId="patientId"
@@ -123,7 +132,7 @@ const OrderPage = () => {
                         {patientList.map(item => (<MenuItem key={item.id} value={item.name}>{item.name}</MenuItem>))}
                     </Select>
                 </FormControl>
-                <FormControl sx={{ width: 500 }} >
+                <FormControl sx={{ width: 400 }} >
                     <InputLabel id="comment">订单状态：</InputLabel>
                     <Select
                         labelId="comment"

@@ -204,9 +204,9 @@ const Schedule = ({ hoscode, depcode, setShowHospIndex, setScheduleId }) => {
         </Stack>
         {tabShow ? <Stack>
             <Typography sx={{ py: 4 }}>号源</Typography>
-            <Stack >
-                {scheduleList.map((item, index) => (<Stack key={`${item.id}${index}scheduleList`}
-                    direction={'row'} sx={{ display: 'flex', flex: 1, justifyContent: 'space-between', borderBottom: 1, pb: 2 }}>
+            <Stack>
+                {scheduleList.map((item, index) => (<Stack key={`${item.id}${index}scheduleList`} 
+                    direction={'row'} sx={{ display: 'flex', flex: 1, justifyContent: 'space-between', borderBottom: 1, pb: 2, pt:1 }}>
                     <Stack direction={'row'} spacing={1}>
                         <Typography sx={{ mt: 1.6 }} >{`${item.title} | ${item.docname}`}</Typography>
                     </Stack>

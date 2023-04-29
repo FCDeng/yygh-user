@@ -100,7 +100,7 @@ const UserListPage = ({ id, setShowUserIndex, setPatientId }) => {
                         <Typography>证件号码：</Typography>
                         <Typography>{item.certificatesNo}</Typography>
                     </Stack>
-                    <Stack direction={'row'}>
+                    <Stack direction={'row'} sx={{cursor:'pointer'}}>
                         <Typography onClick={() => goDetail(item.id)} sx={{ textAlign: 'center', color: '#3375C1' }}>查看详情</Typography>
                         <ChevronRightIcon sx={{ color: '#3375C1' }} />
                     </Stack>
@@ -111,7 +111,7 @@ const UserListPage = ({ id, setShowUserIndex, setPatientId }) => {
         <Card variant="outlined" sx={{ width: '100%', height: 50 }}>
             <CardContent >
                 <Box sx={{
-                    display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'
+                    display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', cursor:'pointer'
                 }}
                     onClick={() => setShowUserIndex(2)}
                 >

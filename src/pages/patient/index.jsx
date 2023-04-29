@@ -14,6 +14,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { SET_PatientStateValue, SET_PatientStateIndex, SET_UserStateValue, SET_UserStateIndex } from '@/store/user'
 import LoginDialog from '@/components/LoginDialog';
+import userInfoApi from '@/api/user/userInfo'
 import classes from './index.scss'
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -69,13 +70,24 @@ const PatientPage = () => {
     const [showUserList, setShowUserList] = useState(true)
     const [showUserIndex, setShowUserIndex] = useState(0)
     const [showOrderIndex, setShowOrderIndex] = useState(0)
+    const paramOrderIndex = search.get('paramOrderIndex')
+    const paramOrderId = search.get('orderId')
+    const paramValueIndex = search.get('paramValueIndex')
+    // const paramOrderIndex = search.get('paramOrderIndex')
+    const [authStatus, setAuthStatus] = useState(2);
     useEffect(() => {
-        const paramOrderIndex = search.get('paramOrderIndex')
-        const paramOrderId = search.get('orderId')
-        console.log(paramOrderIndex, paramOrderId)
+        getUserInfo()
         if (paramOrderIndex) {
-            setShowOrderIndex(paramOrderIndex)
-            setValue(1)
+            setShowOrderIndex(paramOrderIndex*1 || 0)
+            setValue(paramOrderIndex*1)
+        }
+
+        if (paramValueIndex) {
+            if (paramValueIndex != 0 && authStatus != 2) {
+                setValue(0)
+            } else {
+                setValue(paramValueIndex * 1)
+            }
         }
         // if (paramOrderId) {
         //     setOrderId(paramOrderId)
@@ -93,9 +105,16 @@ const PatientPage = () => {
             setShowUserIndex(user.patientStateValue)
             // dispatch(SET_PatientStateValue({ patientStateIndex: 0 }))
         }
-    }, []);
+    }, [paramValueIndex, paramOrderIndex]);
+
+    const getUserInfo = () => {
+        userInfoApi.getUserInfo().then(response => {
+            setAuthStatus(response.data.authStatus)
+        })
+    }
 
     const handleChange = (event, newValue) => {
+        if (value == 0 && authStatus != 2) return
         setValue(newValue);
         setShowUserIndex(0)
         setShowOrderIndex(0)
@@ -118,7 +137,7 @@ const PatientPage = () => {
         <TabPanel value={value} index={0} >
             <UserPage />
         </TabPanel>
-        <TabPanel value={value} index={1}  > 
+        <TabPanel value={value} index={1}  >
             {showOrderIndex == 0 ? <OrderPage /> : null}
             {showOrderIndex == 1 ? <OrderShow orderId={search.get('orderId')} /> : null}
         </TabPanel>

@@ -70,15 +70,14 @@ const UserPage = () => {
     };
     const onFormSubmit = (data) => {
         userInfoApi.saveUserAuth({ ...data, certificatesType: "身份证" }).then(response => {
-            message.success("提交成功")
-            navigate(-1)
-            // window.location.reload()
+            message.success("提交成功") 
+            window.location.reload()
         })
     }
 
     return <Stack className={classes.userPage} spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
         <Typography sx={{ fontWeight: 'bold', pb: 1 }}>实名认证</Typography>
-        <Typography sx={{ fontWeight: 'bold', pb: 1 }}>{`认证状态：${userInfo.param.authStatusString}`}</Typography>
+        <Typography sx={{ fontWeight: 'bold', pb: 1 }}>{`认证状态：${userInfo.authStatus ? userInfo.authStatus == 1 ? '待审核': '已认证' : '未认证'}`}</Typography>
         <Stack direction={'row'} spacing={1} sx={{ display: 'flex', alignItems: 'center', background: '#f4f9ff', width: '100%', height: 80, p: 2, boxSizing: 'border-box' }} >
             <HealthAndSafetyIcon sx={{ color: '#3375C1' }} />
             {/* <Typography sx={{ fontWeight: 'bold', color: '#3375C1' }}>认证成功</Typography> */}
