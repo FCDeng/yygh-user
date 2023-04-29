@@ -145,12 +145,12 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
         setShowUserIndex(0)
     }
 
-    return <Stack className={classes.userListPage} spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
+    return <Stack className={classes.userListPage} spacing={0.5} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
         <Typography sx={{ fontWeight: 'bold' }}>添加患者</Typography>
-        <Typography sx={{ pt: 4, pb: 1 }}>患者信息</Typography>
+        <Typography sx={{ pt: 1, pb: 1 }}>患者信息</Typography>
         <Box component="form" onSubmit={handleSubmit(onFormSubmit)}>
             <Grid container sx={{ py: 1 }} >
-                <Stack spacing={2} direction={'row'}>
+                <Stack spacing={0.5} direction={'row'}>
                     <Grid item xs={6} sx={{ width: 450 }}>
                         <TextField
                             type="text"
@@ -172,8 +172,8 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
                     </Grid>
                 </Stack>
             </Grid>
-            <Grid container sx={{ pt: 2 }}>
-                <Stack spacing={2} direction={'row'}>
+            <Grid container sx={{ pt: 1 }}>
+                <Stack spacing={0.5} direction={'row'}>
                     <Grid item xs={6} sx={{ width: 450 }}>
                         <TextField
                             required
@@ -198,7 +198,7 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
                     </Grid>
                 </Stack>
             </Grid>
-            <Grid container sx={{ pt: 2, pl: 1, width: 450 }}>
+            <Grid container sx={{ pt: 0.5, pl: 1, width: 450 }}>
                 <Stack direction={'row'}>
                     <Typography component={'span'} sx={{ mt: 1 }}> 性别： </Typography>
                     <Stack spacing={2} direction={'row'}>
@@ -246,7 +246,7 @@ const UserAdd = ({ id, setPatientIndex, setShowUserIndex, patientId }) => {
                 </Stack>
 
             </Grid>
-            <Stack direction={'row'} spacing={2} sx={{ display: 'flex', justifyContent: 'center', pt: 15 }}>
+            <Stack direction={'row'} spacing={2} sx={{ display: 'flex', justifyContent: 'center', pt: 2 }}>
                 <Button onClick={goBack} variant='contained'>返回</Button>
                 <Button type='submit' variant='contained'>{submitBnt}</Button>
             </Stack>

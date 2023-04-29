@@ -67,7 +67,7 @@ const OrderShow = ({ orderId, setShowUserIndex }) => {
     }
     // 关闭微信二维码窗口
     const closeDialog = () => {
-        timerRef.current = null
+        setDialogPayVisible(false)
     }
 
     return <Stack spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box', width: 990 }}>
@@ -105,7 +105,7 @@ const OrderShow = ({ orderId, setShowUserIndex }) => {
                 <Typography>  请使用微信扫一扫  </Typography>
                 <Typography>   扫描二维码支付  </Typography>
             </Box>
-                : <Typography>  支付错误  </Typography>}
+                : <Typography>  加载中...  </Typography>}
         </DialogView>
     </Stack >
 }

@@ -95,13 +95,13 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
         setPatientId(patientId)
     }
 
-    return <Stack className={classes.registration} spacing={2} sx={{ py: 2, px: 2 }}>
+    return <Stack className={classes.registration} spacing={2} sx={{ py: 1, px: 1 }}>
         <Typography sx={{ fontWeight: 'bold', mt: 1, mb: 1 }} >挂号信息</Typography>
-        <Stack direction={'row'} sx={{ py: 2 }}>
+        <Stack direction={'row'} sx={{ py: 0.5 }}>
             <LabelIcon sx={{ color: '#3375C1' }} />
             <Typography>选择患者：</Typography>
         </Stack>
-        <Stack direction={'row'} spacing={4} sx={{ pb: 4 }}>
+        <Stack direction={'row'} spacing={0.5} sx={{ pb: 2 }}>
             {patientList.map((item, index) => (<Card
                 variant="outlined"
                 key={item.id}
@@ -131,7 +131,7 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
             <LabelIcon sx={{ color: '#3375C1' }} />
             <Typography>挂号信息</Typography>
         </Stack>
-        <Stack spacing={2} sx={{ pl: 40, pt: 4 }}>
+        <Stack spacing={0.5} sx={{ pl: 40, pt: 0.5 }}>
             <Stack direction={'row'}>
                 <Typography>就诊日期：</Typography>
                 <Typography>{schedule.workDate} </Typography>
@@ -143,7 +143,7 @@ const Registration = ({ scheduleId, setShowHospIndex, hoscode }) => {
             <Stack direction={'row'}> <Typography>医事服务费：</Typography> <Typography>{schedule.amount}</Typography></Stack>
         </Stack>
         {/* <Box sx={{ pl: 40, pt: 4 }}><Button variant='contained' onClick={submitOrder}>{submitBnt}</Button></Box> */}
-        <Stack direction={'row'} spacing={2} sx={{ display: 'flex', justifyContent: 'center', pt: 15 }}>
+        <Stack direction={'row'} spacing={2} sx={{ display: 'flex', justifyContent: 'center', pt: 2 }}>
             <Button onClick={() => setShowHospIndex(1)} variant='contained'>返回</Button>
             <Button variant='contained' onClick={submitOrder}>{submitBnt}</Button>
         </Stack>

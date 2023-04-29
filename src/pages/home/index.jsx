@@ -157,10 +157,10 @@ function HomePage() {
           <Button sx={{ pl: 2 }} type='submit' variant="contained" color="primary">搜索</Button>
         </Stack>
       </Box>
-      <Box sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }} >
+      <Stack sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column' }} >
         <Typography component={'h2'} sx={{ background: 'white', p: 2, fontWeight: "700" }} >医院</Typography>
         <HospitalList data={list} />
-      </Box>
+      </Stack>
     </Box>
   )
 }

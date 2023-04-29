@@ -72,10 +72,10 @@ const HospitalCode = ({ hoscode, setShowHospIndex, setDepCode }) => {
             </Stack>
         </Stack>
         <Box>
-            <Typography sx={{ fontWeight: 'bold', mb: 2, pt: 4 }} component={'h2'}>选择科室</Typography>
-            <Stack spacing={2}>
+            <Typography sx={{ fontWeight: 'bold', mb: 2, pt: 1 }} component={'h2'}>选择科室</Typography>
+            <Stack spacing={1}>
                 {departmentVoList.map((item, index) => (
-                    <Stack spacing={2} key={`${item.id}${index}bb`}>
+                    <Stack spacing={1} key={`${item.id}${index}bb`}>
                         <Stack direction={'row'} spacing={1}>
                             <LabelIcon sx={{ color: '#3375C1' }} />
                             <Typography sx={{ fontWeight: 'bold' }}>{item.depname}</Typography>

@@ -14,12 +14,13 @@ const HospitalList = ({ data }) => {
         navigate('./hospital')
     }
 
-    return <Box sx={{ px: 4, width: 400 }} >
+    return <Stack direction={'row'} flexWrap='wrap'  spacing={4} sx={{ px: 4, width: 990 }} >
         {data.map((item, index) => (
-            <NavLink to={`/hospital/${item.hoscode}`} key={item.id} className={classes.nav} >
+            <NavLink to={`/hospital/${item.hoscode}`} key={item.id} className={classes.nav}>
                 <Box sx={{
                     mt: 2, px: 2, display: 'flex', justifyContent: 'space-between',
-                    py: 4, background: 'white', borderRadius: 2, border: 1
+                    py: 4, background: 'white', borderRadius: 2, border: 1,
+                    width: 400
                 }}>
                     <Box>
                         <Typography sx={{ pb: 4 }}>{item.hosname}</Typography>
@@ -35,6 +36,6 @@ const HospitalList = ({ data }) => {
                 </Box>
             </NavLink>
         ))}
-    </Box>
+    </Stack>
 }
 export default HospitalList

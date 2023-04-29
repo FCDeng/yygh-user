@@ -42,11 +42,11 @@ const UserPage = ({ id, setShowUserIndex, patientId }) => {
         // navigate('./patient/add', { state: { id } })
     }
 
-    return <Stack className={classes.userListPage} spacing={4} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
+    return <Stack className={classes.userListPage} spacing={0.5} sx={{ background: 'white', p: 2, boxSizing: 'border-box' }}>
         <Typography sx={{ fontWeight: 'bold' }}>患者详情</Typography>
-        <Typography sx={{ pt: 1, pb: 1 }}>患者信息</Typography>
+        <Typography sx={{ pt: 0.5, pb: 1 }}>患者信息</Typography>
 
-        <Stack spacing={2} sx={{ pl: 40 }}>
+        <Stack spacing={0.5} sx={{ pl: 40 }}>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>姓名：</Typography><Typography>{patient.name}</Typography></Stack>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>证件号码：</Typography><Typography>{patient.certificatesNo}</Typography></Stack>
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>性别：</Typography><Typography>{patient.sex == 1 ? '男' : '女'}</Typography></Stack>
@@ -56,9 +56,9 @@ const UserPage = ({ id, setShowUserIndex, patientId }) => {
             {/* <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>当前住址：</Typography><Typography>{`${patient.param.provinceString}/${patient.param.cityString}/${patient.param.districtString}`}</Typography></Stack> */}
             <Stack direction={'row'}><Typography spacing={1} sx={{ color: '#999' }}>详细地址：</Typography><Typography>{patient.address}</Typography></Stack>
         </Stack>
-        <Stack direction={'row'} spacing={2}  sx={{ display: 'flex', justifyContent: 'center', pt: 15  }}>
+        <Stack direction={'row'} spacing={2}  sx={{ display: 'flex', justifyContent: 'center', pt: 1  }}>
             <Button onClick={remove} variant='contained'>删除</Button>
-            <Button onClick={() => {setShowUserIndex(2)}} variant='contained'>编辑</Button>
+            {/* <Button onClick={() => {setShowUserIndex(2)}} variant='contained'>编辑</Button> */}
             <Button onClick={() => setShowUserIndex(0)} variant='contained'>返回</Button>
         </Stack>
     </Stack >
