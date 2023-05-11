@@ -8,7 +8,7 @@ import LabelIcon from '@mui/icons-material/Label';
 import hospitalApi from '@/api/hosp/hospital'
 import userInfoApi from '@/api/user/userInfo'
 import { useNavigate, useParams } from 'react-router-dom'
-
+import { message } from '@/components'
 const Schedule = ({ hoscode, depcode, setShowHospIndex, setScheduleId }) => {
     const [hospital, setHospital] = useState({ param: {} })
     const [bookingRule, setBookingRule] = useState({})
@@ -109,12 +109,12 @@ const Schedule = ({ hoscode, depcode, setShowHospIndex, setScheduleId }) => {
     }
     // 预约操作
     const booking = (scheduleId, availableNumber) => {
+        
         if (availableNumber == 0 || pageFirstStatus == -1) {
             message.error('不能预约')
         } else {
             setScheduleId(scheduleId)
-            setShowHospIndex(2)
-            // navigate('hospital/registration', { state: { scheduleId } })
+            setShowHospIndex(2) 
         }
     }
     const dealClass = () => {
@@ -205,17 +205,18 @@ const Schedule = ({ hoscode, depcode, setShowHospIndex, setScheduleId }) => {
         {tabShow ? <Stack>
             <Typography sx={{ py: 4 }}>号源</Typography>
             <Stack>
-                {scheduleList.map((item, index) => (<Stack key={`${item.id}${index}scheduleList`} 
-                    direction={'row'} sx={{ display: 'flex', flex: 1, justifyContent: 'space-between', borderBottom: 1, pb: 2, pt:1 }}>
+                {scheduleList.map((item, index) => (<Stack key={`${item.id}${index}scheduleList`}
+                    direction={'row'} sx={{ display: 'flex', flex: 1, justifyContent: 'space-between', borderBottom: 1, pb: 2, pt: 1 }}>
                     <Stack direction={'row'} spacing={1}>
                         <Typography sx={{ mt: 1.6 }} >{`${item.title} | ${item.docname}`}</Typography>
                     </Stack>
                     <Stack direction={'row'} spacing={2} sx={{ pr: 4 }} >
                         <Typography sx={{ color: '#3375C1', mt: 1 }}>{`￥${item.amount}`}</Typography>
                         <Button
-                            className={classes.btn}
+                            variant='contained'
+                            // className={classes.btn}
                             onClick={() => booking(item.id, item.availableNumber)}
-                            sx={item.availableNumber == 0 || pageFirstStatus == -1 ? { background: '#7f828b', px: 4 } : { bgcolor: '#3375C1', color: 'white', px: 4 }}
+                        // sx={item.availableNumber == 0 || pageFirstStatus == -1 ? { background: '#7f828b', px: 4 } : { bgcolor: '#3375C1', color: 'white', px: 4 }}
                         >{`剩余${item.availableNumber}`}</Button>
                     </Stack>
                 </Stack>

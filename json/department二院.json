@@ -1,0 +1,34 @@
+[
+    {
+        "hoscode": "1000_1",
+        "depcode": "200050923",
+        "depname": "全部科室",
+        "intro": "全部科室",
+        "bigcode": "44f162029abb45f9ff0a5f743da0650d",
+        "bigname": "全部科室"
+    },
+    {
+        "hoscode": "1000_1",
+        "depcode": "200004134",
+        "depname": "内科",
+        "intro": "内科",
+        "bigcode": "1c87253ca8aa8fc966a2443eeaac0fc1",
+        "bigname": "内科"
+    },
+    {
+        "hoscode": "1000_1",
+        "depcode": "200045976",
+        "depname": "外科",
+        "intro": "外科",
+        "bigcode": "cbc348c817edeffab9599ad12205fa78",
+        "bigname": "外科"
+    },
+    {
+        "hoscode": "1000_1",
+        "depcode": "200041040",
+        "depname": "中医科",
+        "intro": "中医科",
+        "bigcode": "7dafa91626a45481feefb3d1a84c7984",
+        "bigname": "中医科"
+    }
+]
